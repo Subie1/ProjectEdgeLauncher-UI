@@ -1,6 +1,6 @@
 import Footer from "./Footer"
 import Sidebar from "./Sidebar"
-import Navbar from "./Narbar"
+import Navbar from "./Navbar"
 
 import VersionManager from "../pages/VersionManager"
 import ServerManager from "../pages/ServerManager"

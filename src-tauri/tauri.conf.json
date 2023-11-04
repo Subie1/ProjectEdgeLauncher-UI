@@ -7,7 +7,7 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "project_edge_launcher",
+    "productName": "sentinel_launcher",
     "version": "0.0.1"
   },
   "tauri": {
@@ -33,7 +33,7 @@
       {
         "fullscreen": false,
         "resizable": false,
-        "title": "Project Edge Launcher",
+        "title": "Sentinel Launcher",
         "width": 800,
         "height": 600
       }

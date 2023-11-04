@@ -25,12 +25,12 @@ export default function ExperimentsManager() {
             <h1 className="text-lg">Experiments</h1>
             {
                 list.map((experiment) => (
-                    <label onClick={() => ModifyExperiment(list.indexOf(experiment))} for={`experiment_${experiment}`} class="flex items-center cursor-pointer relative">
-                        <div class="relative">
-                            <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
-                            <div class={`dot absolute left-1 top-1 w-6 h-6 rounded-full transition ${experiments[list.indexOf(experiment)] ? "bg-accent translate-x-full" : "bg-white"}`}></div>
+                    <label onClick={() => ModifyExperiment(list.indexOf(experiment))} className="flex items-center cursor-pointer relative">
+                        <div className="relative">
+                            <div className={`transition-all duration-300 ${experiments[list.indexOf(experiment)] ? "bg-gray-800" : "bg-gray-600"} w-14 h-8 rounded-full`}></div>
+                            <div className={`dot absolute left-1 top-1 w-6 h-6 rounded-full transition ${experiments[list.indexOf(experiment)] ? "bg-accent translate-x-full" : "bg-white"}`}></div>
                         </div>
-                        <div class="ml-3 font-medium">
+                        <div className="ml-3 font-medium">
                             {experiment}
                         </div>
                     </label>

@@ -1,14 +1,5 @@
-import * as Icons from "react-icons/tb"
 import { useContext, useState } from "react";
 import { storage } from "../lib/Storage";
-
-function GetIcon({ type }) {
-    const Result = Icons[type] ?? Icons.TbCircleMinus;
-
-    return (
-        <Result className="text-white text-xl" />
-    )
-}
 
 export default function ExperimentsManager() {
 
@@ -37,7 +28,7 @@ export default function ExperimentsManager() {
                     <label onClick={() => ModifyExperiment(list.indexOf(experiment))} for={`experiment_${experiment}`} class="flex items-center cursor-pointer relative">
                         <div class="relative">
                             <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
-                            <div class={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition ${experiments[list.indexOf(experiment)] ? "translate-x-full bg-accent" : ""}`}></div>
+                            <div class={`dot absolute left-1 top-1 w-6 h-6 rounded-full transition ${experiments[list.indexOf(experiment)] ? "bg-accent translate-x-full" : "bg-white"}`}></div>
                         </div>
                         <div class="ml-3 font-medium">
                             {experiment}

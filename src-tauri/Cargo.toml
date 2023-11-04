@@ -1,5 +1,5 @@
 [package]
-name = "projectEdgeLauncher"
+name = "project_edge_launcher"
 version = "1.0.0"
 description = "The best (probably) game manager"
 authors = ["Subie"]

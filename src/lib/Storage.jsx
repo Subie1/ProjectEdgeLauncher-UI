@@ -1,9 +1,9 @@
-import { createContext } from "react"
+import { createContext, useState } from "react"
 import useLocalStorage from "../hooks/useLocalStorage";
 
 export const storage = createContext();
 export const StorageProvider = function({ children }) {
-    const [page, setPage] = useLocalStorage("page", 0);
+    const [page, setPage] = useState(0);
     const [experiments, setExperiments] = useLocalStorage("experiments", [false, false, false]);
 
     const [servers, setServers] = useLocalStorage("servers", [])

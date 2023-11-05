@@ -1,21 +1,23 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="/icon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Sentinel Launcher</title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/icon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+  <title>Sentinel Launcher</title>
+</head>
 
-  <script>
-    function FetchLocalStorage(key) {
-      return JSON.parse(window.localStorage.getItem(key));
-    }
-  </script>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+<script>
+  function sentinelInit() {
+    servers.sentinelInit();
+  }
+</script>
+
 </html>

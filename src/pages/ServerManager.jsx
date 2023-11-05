@@ -18,6 +18,9 @@ export default function ServerManager() {
     const { servers, setServers } = useContext(storage);
     const [open, setOpen] = useState(false);
 
+    const [hostInput, setHostInput] = useState("127.0.0.1");
+    const [advancedOptions, setAdvancedOptions] = useState(false);
+
     function AddServer({ elements }) {
         let serverName;
         let serverDescription;
@@ -40,7 +43,7 @@ export default function ServerManager() {
         copy.push({ name: serverName ?? "No Name", description: serverDescription, host: serverHost ?? "127.0.0.1", id: Math.floor(Math.random() * 99999999999) });
 
         setServers(copy);
-        setOpen(false)
+        setOpen(false);
     }
 
     return (
@@ -48,7 +51,26 @@ export default function ServerManager() {
             <Model onSubmit={AddServer} title="Add Server" open={open} onClose={() => setOpen(false)}>
                 <NiceInput id="server_name" placeholder="Server Name" required={true} />
                 <NiceInput id="server_description" placeholder="Server Description" />
-                <NiceInput id="server_host" placeholder="Host" defaultValue="127.0.0.1" />
+                <NiceInput onChange={(value) => setHostInput(value)} id="server_host" placeholder="Host" defaultValue={hostInput} />
+                <a onClick={() => setAdvancedOptions(!advancedOptions)} className="w-full text-right cursor-pointer flex items-center justify-end gap-2 text-gray-200">Advanced Options <GetIcon type={advancedOptions ? "TbChevronUp" : "TbChevronDown"} /></a>
+                <div className={`${advancedOptions ? "block" : "hidden"} w-full h-fit flex flex-col gap-2`}>
+                    <div className="flex items-center justify-center gap-2">
+                        <NiceInput className="flex-1" id="gameplay_api_server" placeholder="Gameplay API Server" />
+                        <NiceInput className="w-20" id="gameplay_api_port" placeholder="Port" />
+                    </div>
+                    <div className="flex items-center justify-center gap-2">
+                        <NiceInput className="flex-1" id="common_api_server" placeholder="Common API Server" />
+                        <NiceInput className="w-20" id="common_api_port" placeholder="Port" />
+                    </div>
+                    <div className="flex items-center justify-center gap-2">
+                        <NiceInput className="flex-1" id="social_api_server" placeholder="Social API Server" />
+                        <NiceInput className="w-20" id="social_api_port" placeholder="Port" />
+                    </div>
+                    <div className="flex items-center justify-center gap-2">
+                        <NiceInput className="flex-1" id="smartfox_server" placeholder="Smartfox Server" />
+                        <NiceInput className="w-20" id="smartfox_port" placeholder="Port" />
+                    </div>
+                </div>
             </Model>
 
             <div className="w-full h-full flex flex-col justify-center items-center gap-4 overflow-hidden">
@@ -59,7 +81,7 @@ export default function ServerManager() {
                                 <div className="absolute w-full h-full bottom-0 bg-gradient-to-t from-black to-transparent rounded-lg"></div>
                                 <div className="flex flex-col items-start p-3 justify-between absolute w-full h-full bg-black rounded-lg bg-opacity-50">
                                     <a onClick={() => setServers(servers.filter((s) => s.id !== server.id))} className="cursor-pointer opacity-30"><GetIcon type="TbTrashFilled" /></a>
-                                    <div className="flex w-full justify-between items-center justify-center">
+                                    <div className="flex w-full justify-between items-center">
                                         <div className="flex flex-col w-fit h-fit">
                                             <h1 className="text-white">{server.name}</h1>
                                             <span className="text-xs text-gray-500">{server.description ? server.description : "No Description"}</span>

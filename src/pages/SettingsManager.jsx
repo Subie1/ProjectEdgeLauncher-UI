@@ -6,7 +6,7 @@ export default function SettingsManager() {
     const { debug, setDebug } = useContext(storage);
 
     return (
-        <main className="w-full h-full relative bg-primary p-3 text-gray-300 flex flex-col gap-4">
+        <main className="w-full h-full relative bg-primary p-3 text-gray-300 flex flex-col gap-4 overflow-auto">
             <h1 className="text-lg">Settings</h1>
             <label onClick={() => setDebug(!debug)} className="flex items-center cursor-pointer relative">
                 <div className="relative">

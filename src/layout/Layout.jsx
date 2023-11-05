@@ -26,7 +26,7 @@ export default function Layout() {
     return (
         <main className="w-full h-full bg-primary flex flex-col">
             <Navbar />
-            <div className="w-full h-full flex">
+            <div className="w-full h-full flex flex-1">
                 <Sidebar />
                 <CurrentPage />
             </div>

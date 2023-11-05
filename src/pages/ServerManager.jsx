@@ -47,7 +47,7 @@ export default function ServerManager() {
     }
 
     return (
-        <main className="w-full h-full relative bg-primary p-3 text-gray-300 flex flex-col gap-4">
+        <main className="flex-1 relative bg-primary p-3 text-gray-300 flex flex-col gap-4 overflow-auto">
             <Model onSubmit={AddServer} title="Add Server" open={open} onClose={() => setOpen(false)}>
                 <NiceInput id="server_name" placeholder="Server Name" required={true} />
                 <NiceInput id="server_description" placeholder="Server Description" />
@@ -56,25 +56,24 @@ export default function ServerManager() {
                 <div className={`${advancedOptions ? "block" : "hidden"} w-full h-fit flex flex-col gap-2`}>
                     <div className="flex items-center justify-center gap-2">
                         <NiceInput className="flex-1" id="gameplay_api_server" placeholder="Gameplay API Server" />
-                        <NiceInput className="w-20" id="gameplay_api_port" placeholder="Port" />
+                        <NiceInput className="w-20 text-center" id="gameplay_api_port" placeholder="Port" />
                     </div>
                     <div className="flex items-center justify-center gap-2">
                         <NiceInput className="flex-1" id="common_api_server" placeholder="Common API Server" />
-                        <NiceInput className="w-20" id="common_api_port" placeholder="Port" />
+                        <NiceInput className="w-20 text-center" id="common_api_port" placeholder="Port" />
                     </div>
                     <div className="flex items-center justify-center gap-2">
                         <NiceInput className="flex-1" id="social_api_server" placeholder="Social API Server" />
-                        <NiceInput className="w-20" id="social_api_port" placeholder="Port" />
+                        <NiceInput className="w-20 text-center" id="social_api_port" placeholder="Port" />
                     </div>
                     <div className="flex items-center justify-center gap-2">
                         <NiceInput className="flex-1" id="smartfox_server" placeholder="Smartfox Server" />
-                        <NiceInput className="w-20" id="smartfox_port" placeholder="Port" />
+                        <NiceInput className="w-20 text-center" id="smartfox_port" placeholder="Port" />
                     </div>
                 </div>
             </Model>
-
-            <div className="w-full h-full flex flex-col justify-center items-center gap-4 overflow-hidden">
-                <div className="w-full h-full grid grid-cols-3 gap-3 overflow-auto">
+            <div className="flex flex-col justify-center items-center gap-4">
+                <div className="w-full max-h-0 grid grid-cols-3 gap-3">
                     {
                         servers.map((server) => (
                             <div className="rounded-lg relative w-full h-56 server-banner">
@@ -94,7 +93,7 @@ export default function ServerManager() {
                     }
                 </div>
             </div>
-            <a onClick={() => setOpen(true)} className="cursor-pointer rounded-lg bg-green-800 drop-shadow-lg text-sm p-2 flex gap-2 items-center justify-center absolute bottom-2 right-2">
+            <a onClick={() => setOpen(true)} className="cursor-pointer rounded-lg bg-green-800 drop-shadow-lg text-sm p-2 flex gap-2 items-center justify-center fixed bottom-2 right-2">
                 <GetIcon type="TbPlus" />
                 <span>Add Server</span>
             </a>

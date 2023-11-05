@@ -1,18 +1,35 @@
 import { useState } from "react";
 
-export default function useBinder(DEV_ENVIRONMENT=false) {
+export default function useBinder(DEV_ENVIRONMENT = false) {
     const [loaded, setLoaded] = useState(false);
 
     window.servers = {};
 
     function initBinder() {
         window.servers.getServers = function () {
-            if (DEV_ENVIRONMENT) return [];
+            if (DEV_ENVIRONMENT) return [{ host: "127.0.0.1", name: "Debug server", description: "Just a server meant for debugging" }, { host: "127.0.0.1", name: "Developer Server", description: "Developer only server" }, { host: "127.0.0.1", name: "Public Server", description: "Public Server for everyone" }];
             return sentinel.getServers();
         }
 
         window.servers.getExperiments = function () {
-            if (DEV_ENVIRONMENT) return [{ "EXPERIMENT_LEGACY_INVENTORY_SUPPORT": false, "EXPERIMENT_ACHIEVEMENTSV1_SUPPORT": false, "EXPERIMENT_MMO_SERVER_SUPPORT": false }];
+            if (DEV_ENVIRONMENT) return [
+                {
+                    id: "EXPERIMENT_LEGACY_INVENTORY_SUPPORT",
+                    display: "1.x/2.x inventory enhancements",
+                    state: false
+                },
+                {
+                    id: "EXPERIMENT_ACHIEVEMENTSV1_SUPPORT",
+                    display: "Support for V1 achievement system (gameplay rewards)",
+                    state: false
+                },
+                {
+                    id: "EXPERIMENT_MMO_SERVER_SUPPORT",
+                    display: "Multiplayer Grid support (EXTREMELY WIP)",
+                    state: false
+                }
+            ]
+            
             return sentinel.getExperiments();
         }
 

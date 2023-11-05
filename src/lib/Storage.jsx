@@ -6,12 +6,12 @@ import useSessionStorage from "../hooks/useSessionStorage";
 export const storage = createContext();
 export const StorageProvider = function({ children }) {
     const [page, setPage] = useState(0);
-
-    const [debug, setDebug] = useSessionStorage("debug_environment", false);
+    const [debug, setDebug] = useState(false);
+    
     const [experiments, setExperiments] = useSessionStorage("experiments", []);
     const [servers, setServers] = useSessionStorage("servers", []);
 
-    const [loaded] = useBinder(true);
+    const [loaded] = useBinder(debug);
 
     useEffect(() => {
         if (!loaded) return;

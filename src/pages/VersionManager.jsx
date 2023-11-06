@@ -25,7 +25,7 @@ export default function VersionManager() {
                     </div>
                 </div>
             </div>
-            <a className="cursor-pointer rounded-lg bg-green-800 drop-shadow-lg text-sm p-2 flex gap-2 items-center justify-center fixed bottom-2 right-2">
+            <a className="cursor-pointer rounded-lg bg-green-800 drop-shadow-lg text-sm p-2 flex gap-2 items-center justify-center fixed bottom-9 right-2">
                 <GetIcon type="TbPlus" />
                 <span>Install Client</span>
             </a>

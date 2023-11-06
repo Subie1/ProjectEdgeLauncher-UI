@@ -1,17 +1,33 @@
-import { useState } from "react";
+import * as uuid from "uuid"
+import { useState } from "react"
+import useLocalization from "./useLocalization"
 
 export default function useBinder(DEV_ENVIRONMENT = false) {
+    useLocalization(DEV_ENVIRONMENT);
+
     const [loaded, setLoaded] = useState(false);
 
-    window.servers = {};
+    if (!window.servers) window.servers = {};
+    if (!window.experiments) window.experiments = {};
+    if (!window.games) window.games = {};
 
     function initBinder() {
-        window.servers.getServers = function () {
-            if (DEV_ENVIRONMENT) return [{ host: "127.0.0.1", name: "Debug server", description: "Just a server meant for debugging" }, { host: "127.0.0.1", name: "Developer Server", description: "Developer only server" }, { host: "127.0.0.1", name: "Public Server", description: "Public Server for everyone" }];
-            return sentinel.getServers();
+        window.servers.get = function () {
+            if (DEV_ENVIRONMENT) return [
+                { host: "0.0.0.0", name: "Debug server", description: "Just a server meant for debugging", id: uuid.v4() },
+                { host: "0.0.0.0", name: "Developer Server", description: "Server meant for testing features", id: uuid.v4() },
+                { host: "0.0.0.0", name: "Public Server", description: "The official public server", id: uuid.v4() }
+            ]
+
+            return sentinel.servers.get();
         }
 
-        window.servers.getExperiments = function () {
+        window.servers.save = function (servers) {
+            if (DEV_ENVIRONMENT) return;
+            return sentinel.servers.save(servers);
+        }
+
+        window.experiments.get = function () {
             if (DEV_ENVIRONMENT) return [
                 {
                     id: "EXPERIMENT_LEGACY_INVENTORY_SUPPORT",
@@ -30,24 +46,30 @@ export default function useBinder(DEV_ENVIRONMENT = false) {
                 }
             ]
             
-            return sentinel.getExperiments();
+            return sentinel.experiments.get();
         }
 
-        window.servers.getEmulationSoftwarePackages = function () {
+        window.experiments.save = function (experiments) {
+            if (DEV_ENVIRONMENT) return;
+            return sentinel.experiments.save(experiments);
+        }
+
+        window.games.setCurrentEmulationSoftware = function (software) {
+            if (DEV_ENVIRONMENT) return;
+            return sentinel.games.setCurrentEmulationSoftware(software);
+        }
+
+        window.games.getCurrentEmulationSoftware = function () {
+            if (DEV_ENVIRONMENT) return window.games.getEmulationSoftwares()[0];
+            return sentinel.games.getCurrentEmulationSoftware();
+        }
+
+        window.games.getEmulationSoftwares = function () {
             if (DEV_ENVIRONMENT) return [{ name: "Project Edge", id: "projectedge" }, { name: "SoDOff", id: "sodoff" }];
-            return sentinel.getEmulationSoftwarePackages();
+            return sentinel.games.getEmulationSoftware();
         }
 
-        window.servers.saveExperiments = function (experiments) {
-            if (DEV_ENVIRONMENT) return;
-            return sentinel.saveExperiments(experiments);
-        }
-
-        window.servers.saveServers = function (servers) {
-            if (DEV_ENVIRONMENT) return;
-            return sentinel.saveServers(servers);
-        }
-
+        window.localization.init();
         if (!loaded) setLoaded(true);
     }
 

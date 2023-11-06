@@ -9,6 +9,8 @@ export default function ExperimentsManager() {
     function ModifyExperiment(index) {
         experiments[index] = { ...experiments[index], state: !experiments[index].state };
 
+        window.
+
         setExperiments(experiments);
         setDummy(Math.random());
     }

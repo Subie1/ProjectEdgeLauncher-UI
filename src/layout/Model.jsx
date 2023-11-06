@@ -18,11 +18,11 @@ export default function Model({ open, onClose, children, title, onSubmit }) {
                     <a onClick={() => onClose ? onClose() : {}} className="cursor-pointer">&#10005;</a>
                 </div>
                 {children}
-                <div className="flex gap-2 w-full text-center">
-                    <button type="submit" className="flex-1 p-4 rounded-lg bg-green-600 text-primary">
+                <div className="flex gap-2 w-full text-center text-lg">
+                    <button type="submit" className="flex-2 p-4 rounded-lg bg-green-600 text-primary">
                         Submit
                     </button>
-                    <button onClick={() => onClose ? onClose() : { }} className="flex-1 p-4 rounded-lg bg-highlight">
+                    <button onClick={() => onClose ? onClose() : { }} className="flex-2 p-4 rounded-lg bg-highlight">
                         Cancel
                     </button>
                 </div>

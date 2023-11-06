@@ -1,21 +1,14 @@
-import * as Icons from "react-icons/tb"
-
-function GetIcon({ type }) {
-    const Result = Icons[type] ?? Icons.TbCircleMinus;
-
-    return (
-        <Result className="text-xl" />
-    )
-}
+import NiceDropdown from "./NiceDropdown"
+import { useContext } from "react"
+import { storage } from "../lib/Storage"
 
 export default function Navbar() {
+
+    const { games, currentGame } = useContext(storage);
     
     return (
-        <nav className="top w-full h-fit p-2 text-gray-300 bg-primary border-b border-b-highlight">
-            <div className="w-fit h-fit rounded-md p-1 flex bg-secondary items-center justify-center gap-2">
-                <span className="p-2 bg-opacity-10 bg-highlight rounded-md">School of Dragons</span>
-                <GetIcon type="TbChevronDown" />
-            </div>
+        <nav className="top w-full grid grid-cols-4 h-fit p-2 text-gray-300 bg-primary border-b border-b-highlight">
+            <NiceDropdown onSelect={(software) => window.games.setCurrentEmulationSoftware(software)} values={games} value={currentGame} />
         </nav>
     )
 

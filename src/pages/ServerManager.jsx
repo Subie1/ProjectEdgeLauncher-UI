@@ -40,7 +40,9 @@ export default function ServerManager() {
         if (!serverHost) return setOpen(false);
 
         const copy = servers;
-        copy.push({ name: serverName ?? "No Name", description: serverDescription, host: serverHost ?? "127.0.0.1", id: Math.floor(Math.random() * 99999999999) });
+        copy.push({ name: serverName ?? "No Name", description: serverDescription, host: serverHost ?? "127.0.0.1", id: uuid.v4() });
+
+        window.servers.save(copy);
 
         setServers(copy);
         setOpen(false);
@@ -76,10 +78,10 @@ export default function ServerManager() {
                 <div className="w-full max-h-0 grid grid-cols-3 gap-3">
                     {
                         servers.map((server) => (
-                            <div className="rounded-lg relative w-full h-56 server-banner">
+                            <div key={server.id} className="rounded-lg relative w-full h-56 server-banner">
                                 <div className="absolute w-full h-full bottom-0 bg-gradient-to-t from-black to-transparent rounded-lg"></div>
                                 <div className="flex flex-col items-start p-3 justify-between absolute w-full h-full bg-black rounded-lg bg-opacity-50">
-                                    <a onClick={() => setServers(servers.filter((s) => s.id !== server.id))} className="cursor-pointer opacity-30"><GetIcon type="TbTrashFilled" /></a>
+                                    <a onClick={() => { setServers(servers.filter((s) => s.id !== server.id)); window.servers.save(servers.filter((s) => s.id !== server.id)); }} className="cursor-pointer opacity-30"><GetIcon type="TbTrashFilled" /></a>
                                     <div className="flex w-full justify-between items-center">
                                         <div className="flex flex-col w-fit h-fit">
                                             <h1 className="text-white">{server.name}</h1>
@@ -93,7 +95,7 @@ export default function ServerManager() {
                     }
                 </div>
             </div>
-            <a onClick={() => setOpen(true)} className="cursor-pointer rounded-lg bg-green-800 drop-shadow-lg text-sm p-2 flex gap-2 items-center justify-center fixed bottom-2 right-2">
+            <a onClick={() => setOpen(true)} className="cursor-pointer rounded-lg bg-green-800 drop-shadow-lg text-sm p-2 flex gap-2 items-center justify-center fixed bottom-9 right-2">
                 <GetIcon type="TbPlus" />
                 <span>Add Server</span>
             </a>

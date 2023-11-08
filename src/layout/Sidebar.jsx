@@ -1,14 +1,7 @@
-import * as Icons from "react-icons/tb"
 import { useContext } from "react"
-import { storage } from "../lib/Storage";
+import { storage } from "../lib/Storage"
 
-function GetIcon({ type }) {
-    const Result = Icons[type] ?? Icons.TbCircleMinus;
-
-    return (
-        <Result className="text-white text-xl" />
-    )
-}
+import NiceIcons from "./NiceIcons"
 
 export default function Sidebar() {
     const { page, setPage } = useContext(storage);
@@ -16,24 +9,24 @@ export default function Sidebar() {
     const list = [
         "TbAssembly",
         "TbServer2",
-        "TbCategory",
+        "TbFlask",
         "TbVaccine"
     ]
 
     return (
-        <div className="w-fit h-full left group bg-primary border-r border-r-highlight flex flex-col items-center p-3 justify-between transition-all duration-500">
+        <div className="text-white w-fit h-full left group bg-primary border-r border-r-highlight flex flex-col items-center p-3 justify-between transition-all duration-500">
             <div className="flex flex-col gap-2 items-center justify-center">
                 {
                     list.map((item) => (
-                        <a key={item} onClick={() => setPage(list.indexOf(item))} className={`${page == list.indexOf(item) ? "ring-4 ring-gray-700" : ""} cursor-pointer flex items-center justify-center w-fit h-fit p-3 rounded-lg bg-secondary`}>
-                            <GetIcon type={item} />
+                        <a key={item} onClick={() => setPage(list.indexOf(item))} className={`${page == list.indexOf(item) ? "bg-green-600" : "bg-secondary"} cursor-pointer flex items-center justify-center w-fit h-fit p-3 rounded-lg`}>
+                            <NiceIcons type={item} />
                         </a>
                     ))
                 }
             </div>
             <div>
-                <a onClick={() => setPage(4)} className={`${page == 4 ? "ring-4 ring-gray-700" : ""} cursor-pointer flex items-center justify-center w-fit h-fit p-3 rounded-lg bg-secondary`}>
-                    <GetIcon type="TbSettings" />
+                <a onClick={() => setPage(4)} className={`${page == 4 ? "bg-green-600" : "bg-secondary"} cursor-pointer flex items-center justify-center w-fit h-fit p-3 rounded-lg`}>
+                    <NiceIcons type="TbSettings" />
                 </a>
             </div>
         </div>

@@ -1,21 +1,14 @@
-import * as Icons from "react-icons/tb"
-import { useContext, useState } from "react";
-import { storage } from "../lib/Storage";
+import * as uuid from "uuid"
+import { useContext, useState } from "react"
+import { storage } from "../lib/Storage"
 
-import Model from "../layout/Model";
-import NiceInput from "../layout/NiceInput";
-
-function GetIcon({ type }) {
-    const Result = Icons[type] ?? Icons.TbCircleMinus;
-
-    return (
-        <Result className="text-white text-xl" />
-    )
-}
+import Model from "../layout/Model"
+import NiceInput from "../layout/NiceInput"
+import NiceIcons from "../layout/NiceIcons"
 
 export default function ServerManager() {
 
-    const { servers, setServers } = useContext(storage);
+    const { servers, setServers, setCustomContextElements } = useContext(storage);
     const [open, setOpen] = useState(false);
 
     const [hostInput, setHostInput] = useState("127.0.0.1");
@@ -54,7 +47,7 @@ export default function ServerManager() {
                 <NiceInput id="server_name" placeholder="Server Name" required={true} />
                 <NiceInput id="server_description" placeholder="Server Description" />
                 <NiceInput onChange={(value) => setHostInput(value)} id="server_host" placeholder="Host" defaultValue={hostInput} />
-                <a onClick={() => setAdvancedOptions(!advancedOptions)} className="w-full text-right cursor-pointer flex items-center justify-end gap-2 text-gray-200">Advanced Options <GetIcon type={advancedOptions ? "TbChevronUp" : "TbChevronDown"} /></a>
+                <a onClick={() => setAdvancedOptions(!advancedOptions)} className="w-full text-right cursor-pointer flex items-center justify-end gap-2 text-gray-200">Advanced Options <NiceIcons type={advancedOptions ? "TbChevronUp" : "TbChevronDown"} /></a>
                 <div className={`${advancedOptions ? "block" : "hidden"} w-full h-fit flex flex-col gap-2`}>
                     <div className="flex items-center justify-center gap-2">
                         <NiceInput className="flex-1" id="gameplay_api_server" placeholder="Gameplay API Server" />
@@ -78,16 +71,30 @@ export default function ServerManager() {
                 <div className="w-full max-h-0 grid grid-cols-3 gap-3">
                     {
                         servers.map((server) => (
-                            <div key={server.id} className="rounded-lg relative w-full h-56 server-banner">
+                            <div onContextMenu={() => {
+                                setCustomContextElements([
+                                    {
+                                        name: "Delete",
+                                        icon: "TbTrashFilled",
+                                        action: () => {
+                                            setServers(servers.filter((s) => s.id !== server.id));
+                                            window.servers.save(servers.filter((s) => s.id !== server.id));
+                                        }
+                                    }
+                                ])
+                            }}
+
+                                key={server.id} className="rounded-lg relative w-full h-56 server-banner">
+
                                 <div className="absolute w-full h-full bottom-0 bg-gradient-to-t from-black to-transparent rounded-lg"></div>
                                 <div className="flex flex-col items-start p-3 justify-between absolute w-full h-full bg-black rounded-lg bg-opacity-50">
-                                    <a onClick={() => { setServers(servers.filter((s) => s.id !== server.id)); window.servers.save(servers.filter((s) => s.id !== server.id)); }} className="cursor-pointer opacity-30"><GetIcon type="TbTrashFilled" /></a>
+                                    <a onClick={() => { setServers(servers.filter((s) => s.id !== server.id)); window.servers.save(servers.filter((s) => s.id !== server.id)); }} className="cursor-pointer opacity-30"><NiceIcons type="TbTrashFilled" /></a>
                                     <div className="flex w-full justify-between items-center">
                                         <div className="flex flex-col w-fit h-fit">
                                             <h1 className="text-white">{server.name}</h1>
                                             <span className="text-xs text-gray-500">{server.description ? server.description : "No Description"}</span>
                                         </div>
-                                        <a className="w-fit cursor-pointer h-fit rounded-xl p-3 bg-green-600"><GetIcon type="TbPlayerPlayFilled" /></a>
+                                        <a className="w-fit cursor-pointer h-fit rounded-xl p-3 bg-green-600"><NiceIcons type="TbPlayerPlayFilled" /></a>
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +103,7 @@ export default function ServerManager() {
                 </div>
             </div>
             <a onClick={() => setOpen(true)} className="cursor-pointer rounded-lg bg-green-800 drop-shadow-lg text-sm p-2 flex gap-2 items-center justify-center fixed bottom-9 right-2">
-                <GetIcon type="TbPlus" />
+                <NiceIcons type="TbPlus" />
                 <span>Add Server</span>
             </a>
         </main>

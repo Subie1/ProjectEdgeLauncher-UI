@@ -1,13 +1,3 @@
-import * as Icons from "react-icons/tb"
-
-function GetIcon({ type }) {
-    const Result = Icons[type] ?? Icons.TbCircleMinus;
-
-    return (
-        <Result className="text-white text-xl" />
-    )
-}
-
 export default function Model({ open, onClose, children, title, onSubmit }) {
 
     return (

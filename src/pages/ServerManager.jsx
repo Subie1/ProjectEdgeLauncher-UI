@@ -8,7 +8,7 @@ import NiceIcons from "../layout/NiceIcons"
 
 export default function ServerManager() {
 
-    const { servers, setServers, setCustomContextElements } = useContext(storage);
+    const { servers, setServers, setCustomContextElements, serverConfig } = useContext(storage);
     const [open, setOpen] = useState(false);
 
     const [hostInput, setHostInput] = useState("127.0.0.1");
@@ -19,6 +19,8 @@ export default function ServerManager() {
         let serverDescription;
         let serverHost;
 
+        const config = {};
+
         for (const input of elements) {
             if (!input.placeholder) continue;
 
@@ -26,14 +28,28 @@ export default function ServerManager() {
             if (input.id == "server_description") serverDescription = input.value.trim();
             if (input.id == "server_host") serverHost = input.value.trim();
 
+            if (input.id == "gameplay_api_server") config["gameplay_api"] = { host: input.value.trim() };
+            if (input.id == "gameplay_api_port") config["gameplay_api"]["port"] = input.value.trim();
+
+            if (input.id == "common_api_server") config["common_api"] = { host: input.value.trim() };
+            if (input.id == "common_api_port") config["common_api"]["port"] = input.value.trim();
+
+            if (input.id == "social_api_server") config["social_api"] = { host: input.value.trim() };
+            if (input.id == "social_api_port") config["social_api"]["port"] = input.value.trim();
+
+            if (input.id == "smartfox_server") config["smartfox"] = { host: input.value.trim() };
+            if (input.id == "smartfox_port") config["smartfox"]["port"] = input.value.trim();
+
             input.value = "";
         }
+
+        console.log(config);
 
         if (!serverName) return setOpen(false);
         if (!serverHost) return setOpen(false);
 
         const copy = servers;
-        copy.push({ name: serverName ?? "No Name", description: serverDescription, host: serverHost ?? "127.0.0.1", id: uuid.v4() });
+        copy.push({ name: serverName ?? "No Name", description: serverDescription, host: serverHost ?? "127.0.0.1", id: uuid.v4(), ...config });
 
         window.servers.save(copy);
 
@@ -50,20 +66,20 @@ export default function ServerManager() {
                 <a onClick={() => setAdvancedOptions(!advancedOptions)} className="w-full text-right cursor-pointer flex items-center justify-end gap-2 text-gray-200">Advanced Options <NiceIcons type={advancedOptions ? "TbChevronUp" : "TbChevronDown"} /></a>
                 <div className={`${advancedOptions ? "block" : "hidden"} w-full h-fit flex flex-col gap-2`}>
                     <div className="flex items-center justify-center gap-2">
-                        <NiceInput className="flex-1" id="gameplay_api_server" placeholder="Gameplay API Server" />
-                        <NiceInput className="w-20 text-center" id="gameplay_api_port" placeholder="Port" />
+                        <NiceInput onChange={(value) => setHostInput(value)} defaultValue={hostInput} className="flex-1" id="gameplay_api_server" placeholder="Gameplay API Server" />
+                        <NiceInput defaultValue={serverConfig.gameplay_api.port} className="w-20 text-center" id="gameplay_api_port" placeholder="Port" />
                     </div>
                     <div className="flex items-center justify-center gap-2">
-                        <NiceInput className="flex-1" id="common_api_server" placeholder="Common API Server" />
-                        <NiceInput className="w-20 text-center" id="common_api_port" placeholder="Port" />
+                        <NiceInput onChange={(value) => setHostInput(value)} defaultValue={hostInput} className="flex-1" id="common_api_server" placeholder="Common API Server" />
+                        <NiceInput defaultValue={serverConfig.common_api.port} className="w-20 text-center" id="common_api_port" placeholder="Port" />
                     </div>
                     <div className="flex items-center justify-center gap-2">
-                        <NiceInput className="flex-1" id="social_api_server" placeholder="Social API Server" />
-                        <NiceInput className="w-20 text-center" id="social_api_port" placeholder="Port" />
+                        <NiceInput onChange={(value) => setHostInput(value)} defaultValue={hostInput} className="flex-1" id="social_api_server" placeholder="Social API Server" />
+                        <NiceInput defaultValue={serverConfig.social_api.port} className="w-20 text-center" id="social_api_port" placeholder="Port" />
                     </div>
                     <div className="flex items-center justify-center gap-2">
-                        <NiceInput className="flex-1" id="smartfox_server" placeholder="Smartfox Server" />
-                        <NiceInput className="w-20 text-center" id="smartfox_port" placeholder="Port" />
+                        <NiceInput onChange={(value) => setHostInput(value)} defaultValue={hostInput} className="flex-1" id="smartfox_server" placeholder="Smartfox Server" />
+                        <NiceInput defaultValue={serverConfig.smartfox.port} className="w-20 text-center" id="smartfox_port" placeholder="Port" />
                     </div>
                 </div>
             </Model>

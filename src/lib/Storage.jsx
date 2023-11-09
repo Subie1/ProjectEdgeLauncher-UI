@@ -15,6 +15,7 @@ export const StorageProvider = function({ children }) {
     const [clientVersions, setClientVersions] = useState([]);
     const [desciptor, setCurrentDescriptor] = useState("");
     const [payloads, setPayloads] = useState([]);
+    const [serverConfig, setServerConfig] = useState(false);
 
     const [customContextElements, setCustomContextElements] = useState([]);
 
@@ -30,12 +31,13 @@ export const StorageProvider = function({ children }) {
         setCurrentGame(window.games.getCurrentEmulationSoftware());
         setClientVersions(window.games.getVersions());
         setPayloads(window.payloads.get());
+        setServerConfig(window.servers.getConfig());
 
         setCanLoadUI(true);
     }, [loaded, desciptor]);
 
     return (
-        <storage.Provider value={{ customContextElements, setCustomContextElements, payloads, setPayloads, desciptor, setCurrentDescriptor, clientVersions, setClientVersions, page, setPage, experiments, setExperiments, servers, setServers, debug, setDebug, games, currentGame }}>
+        <storage.Provider value={{ serverConfig, setServerConfig, customContextElements, setCustomContextElements, payloads, setPayloads, desciptor, setCurrentDescriptor, clientVersions, setClientVersions, page, setPage, experiments, setExperiments, servers, setServers, debug, setDebug, games, currentGame }}>
             {
                 canLoadUI ? desciptor.length ? children : <DescriptorDecider /> : <SplashScreen />
             }

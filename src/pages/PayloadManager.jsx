@@ -56,10 +56,10 @@ export default function PayloadManager() {
                             }} key={payload.file} className="flex items-center justify-between">
                                 <tr className="flex items-center justify-start gap-2">
                                     <td onClick={() => RemovePayload(payload)} className="w-fit h-fit cursor-pointer"><NiceIcons className="!text-gray-400" type="TbTrashFilled" /></td>
-                                    <td>{payload.file}</td>
+                                    <td>{payload.name ?? payload.file}</td>
                                 </tr>
                                 <tr>
-                                    <td>{payload.path}</td>
+                                    <td>{payload.file}</td>
                                 </tr>
                             </div>
                         ))
